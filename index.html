@@ -1,0 +1,2062 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mapeamento Gestão No Tempo - Instituto Impulso Coaching de Liderança</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.4.0/purify.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg1: #0b4aa2;
+      --bg2: #062b62;
+      --surface: #f4f9ff;
+      --card: #ffffff;
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #0b63ce;
+      --primary2: #084aa0;
+      --accent: #38bdf8;
+      --border: #cfe6ff;
+      --shadow: 0 14px 34px rgba(2, 32, 71, .18);
+      --shadow2: 0 8px 20px rgba(2, 32, 71, .12);
+      --radius: 18px;
+      --radius2: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', system-ui, -apple-system, sans-serif;
+      background:
+        radial-gradient(1200px 700px at 20% 10%, rgba(56,189,248,.35), transparent 55%),
+        radial-gradient(900px 600px at 85% 15%, rgba(255,215,0,.18), transparent 60%),
+        linear-gradient(135deg, var(--bg1), var(--bg2));
+      color: var(--text);
+      line-height: 1.6;
+      padding: 18px;
+    }
+
+    .brand, .tagline, .form-group label, .error, .counter, .progress-meta,
+    .opt[aria-checked="true"], .btn, .result-hero h2, .result-box h3,
+    .progress-label, .totals, #energyLeak, .profile .name, .profile .subtitle, .footer,
+    b, strong, th {
+      font-family: Arial, Helvetica, sans-serif !important;
+    }
+
+    .header {
+      text-align: center;
+      padding: 10px 0 20px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(11,99,206,.08);
+    }
+
+    .main-title {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 18px;
+      font-weight: normal;
+      color: #64748b;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      line-height: 1.2;
+    }
+
+    .tagline {
+      margin: 6px 0 18px;
+      font-weight: 700;
+      color: #0b2a52;
+      font-size: 13px;
+      letter-spacing: .02em;
+    }
+
+    .sub-title {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 34px;
+      line-height: 1.15;
+      color: #063b7a;
+      font-weight: normal;
+      letter-spacing: -0.01em;
+    }
+
+    .header-desc {
+      margin: 12px auto 0;
+      max-width: 78ch;
+      color: var(--muted);
+      font-size: 14px;
+      font-weight: normal;
+    }
+
+    .container {
+      max-width: 980px;
+      margin: 0 auto;
+      background: linear-gradient(180deg, rgba(244,249,255,.95), rgba(244,249,255,.92));
+      border: 1px solid rgba(56,189,248,.35);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .container::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 6px;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+    }
+
+    .wrap {
+      padding: 26px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid rgba(207,230,255,.95);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow2);
+      padding: 18px;
+    }
+
+    .instructions {
+      background: linear-gradient(180deg, rgba(56,189,248,.14), rgba(56,189,248,.08));
+      border: 1px solid rgba(56,189,248,.25);
+      border-left: 6px solid var(--accent);
+      border-radius: var(--radius2);
+      padding: 16px;
+      margin: 14px 0 18px;
+      color: var(--text);
+    }
+
+    .instructions p {
+      margin: 0 0 10px;
+      font-size: 14px;
+      color: var(--text);
+      text-align: justify;
+    }
+
+    .instructions p:last-child {
+      margin-bottom: 0;
+    }
+
+    .grid-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px 24px;
+    }
+
+    .grid-form .form-group {
+      text-align: left;
+    }
+
+    .grid-form .form-group input, .grid-form .form-group select {
+      text-align: left;
+    }
+
+    @media (max-width: 650px) {
+      .grid-form {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .form-group label {
+      display: block;
+      font-weight: 800;
+      color: #063b7a;
+      margin-bottom: 8px;
+      font-size: 14px;
+    }
+
+    .form-group input, .form-group select {
+      width: 100%;
+      padding: 14px;
+      border: 1.5px solid rgba(11,99,206,.28);
+      border-radius: 12px;
+      font-size: 15px;
+      background: #fff;
+      outline: none;
+      transition: box-shadow .2s ease, border-color .2s ease;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    .form-group input:focus, .form-group select:focus {
+      border-color: rgba(11,99,206,.55);
+      box-shadow: 0 0 0 4px rgba(56,189,248,.22);
+    }
+
+    .form-group select {
+      cursor: pointer;
+    }
+
+    .error {
+      display: none;
+      margin-top: 6px;
+      color: #b91c1c;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    .topbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 12px;
+      align-items: center;
+      justify-content: space-between;
+      margin: 10px 0 12px;
+    }
+
+    .counter {
+      font-weight: 800;
+      color: #0b2a52;
+      font-size: 14px;
+    }
+
+    .progress-meta {
+      font-weight: 700;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .progress-bar {
+      width: 100%;
+      background: #e6eefc;
+      border-radius: 999px;
+      overflow: hidden;
+      height: 12px;
+      border: 1px solid rgba(11,99,206,.12);
+    }
+
+    .progress-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent), var(--primary));
+      transition: width .35s ease-in-out;
+    }
+
+    .question-title {
+      margin: 0 0 10px;
+      font-size: 16px;
+      font-weight: 600;
+      color: #0f172a;
+    }
+
+    .options {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .opt {
+      border: 1.5px solid rgba(11,99,206,.22);
+      background: rgba(11,99,206,.06);
+      border-radius: 12px;
+      padding: 10px 10px;
+      cursor: pointer;
+      user-select: none;
+      transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+      min-height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: 500;
+      color: #0b2a52;
+      font-size: 13px;
+      flex: 0 1 calc(20% - 10px);
+      max-width: 180px;
+      min-width: 120px;
+    }
+
+    @media (max-width: 820px) {
+      .opt {
+        flex: 0 1 calc(50% - 10px);
+        min-width: 140px;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .opt {
+        flex: 0 1 100%;
+        max-width: 340px;
+        min-width: 0;
+      }
+    }
+
+    .opt:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 12px 18px rgba(2, 32, 71, .10);
+      border-color: rgba(56,189,248,.55);
+    }
+
+    .opt[aria-checked="true"] {
+      background: linear-gradient(45deg, var(--primary), var(--primary2));
+      border-color: rgba(11,99,206,.55);
+      color: #fff;
+      box-shadow: 0 14px 22px rgba(11,99,206,.22);
+      font-weight: 600;
+    }
+
+    .nav {
+      display: flex;
+      gap: 10px;
+      justify-content: space-between;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      border-radius: 14px;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 800;
+      transition: transform .12s ease, box-shadow .2s ease, filter .2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(45deg, var(--primary), var(--primary2));
+      color: #fff;
+      box-shadow: 0 10px 18px rgba(11,99,206,.22);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      filter: saturate(1.05);
+      box-shadow: 0 14px 26px rgba(11,99,206,.30);
+    }
+
+    .btn-ghost {
+      background: #fff;
+      color: #0b2a52;
+      border: 1.5px solid rgba(11,99,206,.22);
+      box-shadow: 0 8px 16px rgba(2, 32, 71, .08);
+      text-decoration: none;
+    }
+
+    .btn-ghost:hover {
+      transform: translateY(-1px);
+      border-color: rgba(56,189,248,.55);
+    }
+
+    .btn:disabled {
+      opacity: .55;
+      cursor: not-allowed;
+      transform: none !important;
+      box-shadow: none !important;
+    }
+
+    .result-hero {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .result-hero h2 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 900;
+      color: #063b7a;
+    }
+
+    .result-grid {
+      display: grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    @media (max-width: 820px) {
+      .result-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .result-box {
+      background: #fff;
+      border: 1px solid rgba(207,230,255,.95);
+      border-left: 6px solid var(--accent);
+      padding: 16px;
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow2);
+    }
+
+    .result-box h3 {
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-weight: 900;
+      color: #063b7a;
+    }
+
+    .result-box p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .progress-container {
+      margin: 12px 0;
+    }
+
+    .progress-label {
+      font-weight: 800;
+      color: #0b2a52;
+      margin-bottom: 6px;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .triad-bar {
+      width: 100%;
+      background: #e6eefc;
+      border-radius: 999px;
+      overflow: hidden;
+      height: 14px;
+      border: 1px solid rgba(11,99,206,.12);
+    }
+
+    .triad-fill {
+      height: 100%;
+      width: 0%;
+      border-radius: 999px;
+      transition: width .45s ease-in-out;
+    }
+
+    .fill-a {
+      background: linear-gradient(90deg, #ffd54a, #f59e0b);
+    }
+
+    .fill-b {
+      background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+    }
+
+    .fill-c {
+      background: linear-gradient(90deg, #fb7185, #dc2626);
+    }
+
+    .totals {
+      margin-top: 10px;
+      font-size: 13px;
+      color: #0b2a52;
+      font-weight: 800;
+      line-height: 1.55;
+    }
+
+    #energyLeak {
+      font-weight: 1000;
+      color: #7f1d1d;
+      background: rgba(220,38,38,.08);
+      padding: 6px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(220,38,38,.35);
+      display: inline-block;
+    }
+
+    .profile {
+      margin-top: 12px;
+      padding: 16px;
+      border-radius: 14px;
+      border: 1px solid rgba(11,99,206,.18);
+      background: linear-gradient(180deg, rgba(244,249,255,1), rgba(230,240,255,1));
+      box-shadow: 0 4px 12px rgba(2, 32, 71, .05);
+    }
+
+    .profile .name {
+      font-weight: 900;
+      color: #063b7a;
+      margin: 0 0 4px;
+      font-size: 18px;
+    }
+
+    .profile .subtitle {
+      font-weight: 800;
+      color: var(--primary);
+      margin: 0 0 12px;
+      font-size: 13px;
+    }
+
+    .profile .desc {
+      margin: 0;
+      color: #0f172a;
+      font-weight: 500;
+      font-size: 13.5px;
+      white-space: pre-line;
+      text-align: justify;
+    }
+
+    .charts {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 14px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 820px) {
+      .charts {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chart-card {
+      background: #fff;
+      border: 1px solid rgba(207,230,255,.95);
+      border-radius: var(--radius2);
+      padding: 12px;
+      box-shadow: var(--shadow2);
+      min-height: 320px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .chart-card canvas {
+      width: 100% !important;
+      aspect-ratio: 1 / 1;
+      height: auto !important;
+      max-height: 320px !important;
+      border-radius: 12px;
+    }
+
+    .footer {
+      margin-top: 20px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="wrap">
+
+      <!-- CABEÇALHO -->
+      <div class="header">
+        <p class="main-title">Instituto Impulso Coaching de Liderança</p>
+        <p class="tagline">A mudança pode acontecer em um instante</p>
+        <h1 class="sub-title">Mapeamento da Gestão No Tempo</h1>
+        <p class="header-desc">Descubra como você investe sua energia vital e assuma o controle de suas tarefas.</p>
+      </div>
+
+      <!-- STEP: INTRO -->
+      <section id="step-intro" class="step active">
+        <div class="instructions">
+          <p>O método de mapeamento utilizado nesta pesquisa é a Tríade do Tempo, criado por Christian Barbosa, autor do best-seller "A Tríade do Tempo". É um modelo prático de medir a produtividade inspirado em metodologias globais de gestão no tempo. Ela mapeia com precisão cirúrgica onde sua energia e foco estão sendo investidos diariamente.</p>
+          <p>Organizações e executivos que adotam esta metodologia, relatam ganhos expressivos de performance, com aumento de produtividade chegando a 50%. Agora, você iniciará o mesmo processo que líderes de alta performance utilizam para transformar agenda em resultado de alto impacto.</p>
+          <p style="margin-top: 10px; color: #0b63ce;"><strong style="font-family: Arial, sans-serif;">Instruções:</strong> Selecione a opção que reflete fielmente sua realidade atual: 1 (Nunca) à 5 (Sempre). Seja honesto para identificar a sua realidade atual. Não responda como gostaria de ser, mas como você realmente é hoje.</p>
+        </div>
+
+        <div class="card" style="width: 100%; max-width: 720px; margin: 0 auto; padding: 32px 24px;">
+          <div class="grid-form">
+            <div class="form-group">
+              <label for="name">Nome Completo *</label>
+              <input type="text" id="name" name="name" autocomplete="name" placeholder="Ex: João Silva" />
+              <p id="name-error" class="error">Por favor, preencha o nome.</p>
+            </div>
+            <div class="form-group">
+              <label for="whatsapp">WhatsApp *</label>
+              <input type="tel" id="whatsapp" name="whatsapp" placeholder="(00) 90000-0000" maxlength="15" />
+              <p id="whatsapp-error" class="error">Por favor, preencha um WhatsApp válido.</p>
+            </div>
+            <div class="form-group">
+              <label for="email">E-mail Corporativo/Pessoal *</label>
+              <input type="email" id="email" name="email" autocomplete="email" placeholder="email@exemplo.com" />
+              <p id="email-error" class="error">Por favor, preencha um e-mail válido.</p>
+            </div>
+            <div class="form-group">
+              <label for="profession">Cargo / Profissão *</label>
+              <input type="text" id="profession" name="profession" autocomplete="organization-title" placeholder="Ex: Diretor, Gerente" />
+              <p id="profession-error" class="error">Por favor, preencha a profissão.</p>
+            </div>
+            <div class="form-group">
+              <label for="age">Idade *</label>
+              <input type="text" id="age" name="age" maxlength="2" inputmode="numeric" placeholder="Ex: 35" />
+              <p id="age-error" class="error">Idade inválida.</p>
+            </div>
+            <div class="form-group">
+              <label for="escolaridade">Escolaridade *</label>
+              <select id="escolaridade" name="escolaridade">
+                <option value="">Selecione...</option>
+                <option value="Ensino Médio Incompleto">Ensino Médio Incompleto</option>
+                <option value="Ensino Médio Completo">Ensino Médio Completo</option>
+                <option value="Ensino Superior Incompleto">Ensino Superior Incompleto</option>
+                <option value="Ensino Superior Completo">Ensino Superior Completo</option>
+                <option value="Pós-Graduação / MBA">Pós-Graduação / MBA</option>
+                <option value="Mestrado / Doutorado">Mestrado / Doutorado</option>
+              </select>
+              <p id="escolaridade-error" class="error">Por favor, selecione a escolaridade.</p>
+            </div>
+          </div>
+          <div class="nav" style="justify-content:center; margin-top:32px;">
+            <button id="btn-start" class="btn btn-primary" type="button" style="width: 100%; max-width: 320px; justify-content: center; padding: 14px; font-size: 16px;">Iniciar Avaliação</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP: QUIZ -->
+      <section id="step-quiz" class="step">
+        <div class="topbar">
+          <div class="counter">Pergunta <span id="q-current">1</span> de 18</div>
+          <div class="progress-meta"><span id="answered-count">0</span>/18 respondidas</div>
+        </div>
+        <div class="progress-bar" aria-label="Progresso de respostas">
+          <div id="progress-fill" class="progress-fill"></div>
+        </div>
+        <div class="card" style="margin-top:12px; padding: 30px;">
+          <p id="question-text" class="question-title" style="text-align: center; font-size: 18px; min-height: 50px; font-family: Arial, sans-serif;"></p>
+          <div id="options" class="options" role="radiogroup" aria-label="Opções de resposta" style="margin-top: 24px;"></div>
+          <div class="nav" style="margin-top: 30px;">
+            <button id="btn-prev" class="btn btn-ghost" type="button">Anterior</button>
+            <button id="btn-next" class="btn btn-primary" type="button" style="display:none;">Gerar Relatório</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- STEP: RESULTS -->
+      <section id="step-results" class="step">
+        <div class="result-hero">
+          <h2 id="result-title">Sua Gestão no Tempo</h2>
+          <p id="auto-send-status" class="text-sm mt-2" style="font-family: Arial, sans-serif; font-weight: bold; color: #0b63ce;"></p>
+          <div id="final-success-message" style="margin-top:14px; background:rgba(16,185,129,0.1); border:1px solid rgba(16,185,129,0.4); padding:16px; border-radius:12px; text-align:center; display:none;">
+            <p style="margin:0; font-size:18px; font-family: Arial, sans-serif; font-weight: bold; color:#065f46;">✅ Relatório Gerado!</p>
+            <p style="margin:6px 0 0; font-size:14px; color:#047857;">Seu resultado completo e em PDF de alta qualidade foi enviado para seu e-mail.<br>Equipe Instituto Impulso notificada.</p>
+          </div>
+        </div>
+        <div class="result-grid">
+          <div class="card">
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Esfera Circunstância (A)</span>
+                <span id="percentA" style="font-family: Arial, sans-serif; font-weight: bold;">0%</span>
+              </div>
+              <div class="triad-bar"><div id="barA" class="triad-fill fill-a" style="width:0%"></div></div>
+            </div>
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Esfera Importância (B)</span>
+                <span id="percentB" style="font-family: Arial, sans-serif; font-weight: bold;">0%</span>
+              </div>
+              <div class="triad-bar"><div id="barB" class="triad-fill fill-b" style="width:0%"></div></div>
+            </div>
+            <div class="progress-container">
+              <div class="progress-label">
+                <span>Esfera Urgência (C)</span>
+                <span id="percentC" style="font-family: Arial, sans-serif; font-weight: bold;">0%</span>
+              </div>
+              <div class="triad-bar"><div id="barC" class="triad-fill fill-c" style="width:0%"></div></div>
+            </div>
+            <div class="totals" id="result-totals">
+              <div><strong>Score Base:</strong> A: <span id="totalA">0</span> | B: <span id="totalB">0</span> | C: <span id="totalC">0</span></div>
+              <div style="margin-top:10px; padding-top: 10px; border-top: 1px solid #e2e8f0;">
+                <span style="font-size: 14px;"><strong>Índice de Vazamento de Energia:</strong></span>
+                <span id="energyLeak" style="font-size: 16px;">0</span>
+              </div>
+            </div>
+            <div class="profile" id="profile-box">
+              <p class="name" id="profile-name">Perfil Identificado</p>
+              <p class="subtitle" id="profile-subtitle"></p>
+              <p class="desc" id="profile-desc"></p>
+            </div>
+            <div class="nav" style="margin-top:14px; display: none;" id="btn-back-wrap">
+              <button id="btn-back-quiz" class="btn btn-ghost" type="button">Fazer Nova Análise</button>
+            </div>
+          </div>
+          <div>
+            <div class="result-box">
+              <h3>Circunstância (A) - Ladrões de Tempo</h3>
+              <p>Atividades feitas por pressão externa, distrações e tarefas que não geram resultados alinhados aos seus objetivos estratégicos.</p>
+            </div>
+            <div class="result-box" style="margin-top:10px;">
+              <h3>Importância (B) - Alta Performance</h3>
+              <p>Tempo investido em planejamento, visão de futuro, saúde e metas. A verdadeira esfera dos líderes que geram impacto duradouro.</p>
+            </div>
+            <div class="result-box" style="margin-top:10px;">
+              <h3>Urgência (C) - Apagador de Incêndios</h3>
+              <p>Demandas reativas, imprevistos constantes e prazos estourados. Gera alta carga de estresse, ansiedade e risco de burnout.</p>
+            </div>
+            <div class="charts">
+              <div class="chart-card">
+                <canvas id="triadChart"></canvas>
+              </div>
+              <div class="chart-card">
+                <canvas id="idealTriadChart"></canvas>
+              </div>
+            </div>
+          </div>
+        </div>
+        <p class="footer">Instituto Impulso Coaching | Rogério Braga - Master Coach Executivo</p>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    /* ===================================================================
+       SCRIPT COMPLETO — VERSÃO PREMIUM CEO
+       
+       MELHORIAS:
+       1. CAPA PDF — Redesenhada: fundo branco, silhueta cabeça + engrenagens
+          + relógio, ondas azuis corporativas (inspirada Act Coaching DISC)
+       2. PERFIS — Textos completos expandidos com neurociência,
+          referências corporativas e recomendações detalhadas
+       3. Todo o resto mantido integralmente da versão anterior
+       =================================================================== */
+
+    if (!window.jspdf) {
+      alert("Erro de Biblioteca. Recarregue a página.");
+    }
+    if (!window.Chart) {
+      alert("Erro de Biblioteca de Gráfico. Recarregue a página.");
+    }
+
+    /* ===============================================================
+       CONFIGURAÇÃO
+       =============================================================== */
+    const WEB_APP_URL = "https://script.google.com/macros/s/COLE_SUA_ID_AQUI/exec";
+    const API_KEY = "2026Impulso$";
+    let autoSendInProgress = false;
+    let autoSendDone = false;
+    let emailSendAttempts = 0;
+    const MAX_EMAIL_ATTEMPTS = 3;
+
+    /* ===============================================================
+       FUNÇÕES UTILITÁRIAS
+       =============================================================== */
+
+    function toTitleCase(str) {
+      if (!str) return "";
+      const lowers = ["da", "de", "do", "das", "dos", "e"];
+      return String(str).toLowerCase().split(' ').map(function(word, index) {
+        if (index > 0 && lowers.includes(word)) return word;
+        return word.charAt(0).toUpperCase() + word.slice(1);
+      }).join(' ');
+    }
+
+    function sanitizeInput(input) {
+      return window.DOMPurify ? DOMPurify.sanitize(String(input || "")) : String(input || "");
+    }
+
+    function validateEmail(email) {
+      return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(email || "").trim());
+    }
+
+    function wait(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function setAutoSendStatus(msg, type) {
+      const el = document.getElementById("auto-send-status");
+      if (!el) return;
+      el.textContent = msg;
+      if (type === "success") el.style.color = "#059669";
+      else if (type === "error") el.style.color = "#dc2626";
+      else el.style.color = "#0b63ce";
+    }
+
+    /* ===============================================================
+       ENVIO PARA GOOGLE APPS SCRIPT
+       =============================================================== */
+
+    async function postResultToScript(payload) {
+      try {
+        const response = await fetch(WEB_APP_URL, {
+          method: "POST",
+          redirect: "follow",
+          body: JSON.stringify(payload)
+        });
+
+        const text = await response.text();
+        console.log("Resposta do Apps Script:", text);
+
+        let data = {};
+        try {
+          data = JSON.parse(text);
+        } catch (e) {
+          console.warn("Resposta não é JSON:", text.substring(0, 200));
+          if (text.toLowerCase().includes("success") || text.toLowerCase().includes("enviado")) {
+            data = { ok: true, message: "Processado (resposta não-JSON)" };
+          } else {
+            throw new Error("Resposta inesperada do servidor: " + text.substring(0, 150));
+          }
+        }
+
+        if (data.ok === false && data.status === "error") {
+          throw new Error(data.message || "Erro retornado pelo servidor.");
+        }
+
+        return data;
+
+      } catch (error) {
+        console.error("Erro no postResultToScript:", error);
+        throw error;
+      }
+    }
+
+    /* ===============================================================
+       5 PERFIS COMPLETOS — TEXTOS INTEGRAIS EXPANDIDOS
+       Inclui: neurociência, referências corporativas, recomendações
+       =============================================================== */
+
+    function triadPickProfile(A, B, C) {
+      const a = Number(A), b = Number(B), c = Number(C);
+
+      // 1) SUPER PODEROSO THOR — Importância >= 60, A <= 20, C <= 20
+      if (b >= 60 && a <= 20 && c <= 20) {
+        return {
+          nome: "Super Poderoso Thor",
+          subtitle: "Importante: Dominante | O perfil da Alta Performance Excepcional",
+          desc: "Sinônimo de preparo, planejamento estratégico e alto valor agregado.",
+          texto: "Thor representa o mais alto nível de maestria na gestão do tempo. Ele não reage ao mundo — ele projeta o mundo que deseja. Sua rotina é dominada por atividades da Esfera da Importância: planejamento, metas de médio e longo prazo, saúde, relacionamentos estratégicos e desenvolvimento contínuo. Raramente é surpreendido por urgências porque antecipa cenários e se prepara para eles. Sua energia não é desperdiçada em distrações circunstanciais.\n\nEsse é o perfil dos líderes mais admirados do mundo corporativo — aqueles que parecem ter mais horas no dia simplesmente porque investem cada minuto com intencionalidade cirúrgica. O resultado? Alta produtividade, equilíbrio emocional, clareza nas decisões e uma trajetória de realizações consistentes.\n\nO Thor opera frequentemente no chamado 'Estado de Flow' — um estado mental de alta concentração onde o cérebro funciona em seu pico de desempenho. Neste estado, a percepção de tempo se altera, a criatividade floresce e a capacidade de resolução de problemas complexos se multiplica exponencialmente. Neurocientificamente, o flow é marcado pela liberação sincronizada de dopamina, norepinefrina, endorfinas, anandamida e serotonina — um coquetel neuroquímico que potencializa todas as funções cognitivas superiores.\n\nLíderes como Elon Musk (Tesla/SpaceX), Tim Cook (Apple) e Satya Nadella (Microsoft) exemplificam características deste perfil: agenda blindada para trabalho profundo, delegação eficaz, visão de longo prazo como bússola diária e disciplina implacável na proteção do tempo estratégico. Eles não são produtivos porque trabalham mais horas — são produtivos porque investem cada hora com precisão cirúrgica nas atividades que geram o maior impacto.\n\nSe você é Thor, parabéns: você domina a arte de transformar tempo em legado. Sua missão agora é sustentar esse patamar e, quando possível, elevar ainda mais a qualidade do tempo investido na Esfera da Importância — refinando processos, desenvolvendo sucessores e ampliando seu impacto estratégico.\n\nRecomendações para manter e ampliar sua Alta Performance:\n• Continue blindando seus horários nobres para trabalho profundo e estratégico\n• Invista em mentorar outros líderes — ensinar consolida sua própria maestria\n• Revise trimestralmente suas metas de longo prazo para garantir alinhamento\n• Mantenha rituais de autocuidado (sono, exercício, meditação) como inegociáveis\n• Pratique a 'poda estratégica': elimine periodicamente compromissos que deixaram de gerar valor\n• Desenvolva sistemas de delegação cada vez mais sofisticados para liberar seu tempo para decisões de altíssimo impacto"
+        };
+      }
+
+      // 2) HOMEM DE FERRO — Importância >= 40 e < 60, A <= 30
+      if (b >= 40 && b < 60 && a <= 30) {
+        return {
+          nome: "Homem de Ferro",
+          subtitle: "Importante: Forte | Estrategista em ascensão com potencial de Alta Performance",
+          desc: "Você já opera com visão estratégica — mas ainda há espaço para blindar sua agenda contra vazamentos de energia e alcançar o patamar máximo de produtividade.",
+          texto: "O Homem de Ferro é aquele profissional que já entendeu o jogo: sabe que investir em planejamento, desenvolvimento pessoal e metas de longo prazo é o caminho da alta performance. Boa parte do seu tempo está na Esfera da Importância, o que lhe confere resultados acima da média. No entanto, ainda enfrenta episódios de urgência que consomem energia e foco.\n\nSão reuniões que poderiam ser e-mails, pequenos incêndios que surgem por falta de delegação ou processos ainda não totalmente automatizados. São interrupções que, embora pareçam inofensivas individualmente, acumulam um custo cognitivo significativo ao longo do dia. A neurociência chama isso de 'attention residue' (resíduo de atenção) — quando você muda de uma tarefa para outra, parte do seu cérebro continua processando a tarefa anterior por até 23 minutos, segundo pesquisas da Universidade da Califórnia.\n\nA boa notícia é que você está próximo do perfil ideal. Pequenos ajustes na rotina — como blindar horários nobres para tarefas estratégicas, aprimorar a delegação e criar buffers de tempo entre compromissos — podem catapultar você para o nível Thor. Você já tem a armadura; agora é hora de polir cada peça.\n\nO Homem de Ferro possui uma vantagem competitiva rara: a consciência de que o tempo é o ativo mais valioso. Diferente de quem vive no modo reativo, você já investe significativamente no que importa. O desafio agora é eliminar os últimos 'vazamentos' de energia que impedem o salto para a excelência absoluta.\n\nAnálise neurológica do seu padrão: Seu cérebro já desenvolveu circuitos fortes para foco prolongado e planejamento estratégico (córtex pré-frontal altamente ativo). Porém, os episódios de urgência ainda ativam sua amígdala com frequência suficiente para gerar picos de cortisol que reduzem sua capacidade de pensamento criativo e visão de longo prazo. Cada urgência eliminada da sua rotina libera capacidade neural para inovação e liderança visionária.\n\nRecomendações para evoluir ao nível Thor:\n• Identifique as 3 principais fontes de urgência recorrente e crie sistemas preventivos para cada uma\n• Implemente a regra dos 2 minutos: se pode ser delegado em 2 minutos, delegue imediatamente\n• Crie 'blocos de gênio' — períodos de 90 a 120 minutos totalmente protegidos para trabalho profundo\n• Reduza reuniões em 30% nas próximas 4 semanas e meça o impacto na produtividade\n• Estabeleça um ritual matinal de 30 minutos focado exclusivamente em suas 3 prioridades estratégicas do dia\n• Pratique o 'batching' — agrupe tarefas similares (e-mails, calls, decisões operacionais) em blocos específicos\n• Invista 15 minutos no final de cada dia para planejar o dia seguinte com intencionalidade\n• Desenvolva um sistema de delegação baseado em competências, não em disponibilidade"
+        };
+      }
+
+      // 3) SUPER HOMEM — Urgência dominante >= 45
+      if (c >= 45 && c > a && c > b) {
+        return {
+          nome: "Super Homem",
+          subtitle: "Urgência: Dominante | O Apagador de Incêndios Crônico — Alto Risco de Burnout",
+          desc: "Você vive em modo de combate permanente — reagindo a crises em vez de construir resultados sustentáveis. Seu organismo está operando sob estresse crônico.",
+          texto: "O Super Homem vive voando de emergência em emergência. Sua rotina é dominada por prazos estourados, demandas de última hora e a sensação constante de que não há tempo suficiente. Ele é frequentemente visto como 'o cara que resolve tudo', mas por trás dessa fachada existe um profissional esgotado, com níveis elevados de cortisol, dificuldade de concentração profunda e risco real de burnout.\n\nO problema central não é falta de competência — é falta de planejamento preventivo. Quando não dedicamos tempo à Esfera da Importância (metas, prevenção, estratégia), as tarefas importantes se transformam em urgentes. E o ciclo se retroalimenta: quanto mais urgências, menos tempo para planejar; quanto menos planejamento, mais urgências. Este é o chamado 'ciclo vicioso da urgência', e romper esse padrão exige uma intervenção consciente e deliberada.\n\nDo ponto de vista neurocientífico, o cérebro do Super Homem está preso num loop de estresse crônico. O cortisol elevado de forma constante causa: redução do hipocampo (centro de memória e aprendizagem), enfraquecimento do córtex pré-frontal (responsável por planejamento, decisões complexas e controle de impulsos), hiperativação da amígdala (gerando ansiedade, reatividade emocional e dificuldade de sono), comprometimento do sistema imunológico e aumento do risco cardiovascular.\n\nEm termos de produtividade, estudos da Harvard Business Review demonstram que profissionais que operam cronicamente na urgência produzem até 40% menos resultados de alto impacto do que aqueles que dedicam a maior parte do tempo à Esfera da Importância — mesmo trabalhando mais horas. Isso porque a urgência constante impede o 'deep work' (trabalho profundo), que é onde residem as contribuições mais valiosas de um líder.\n\nO Super Homem frequentemente confunde estar ocupado com ser produtivo. Sua agenda lotada cria uma ilusão de importância, mas quando analisada criteriosamente, revela que a maioria das 'urgências' poderiam ter sido evitadas com planejamento antecipado, delegação eficaz ou simplesmente dizendo 'não' a demandas que não estão alinhadas com seus objetivos estratégicos.\n\nRomper esse ciclo exige uma decisão consciente: reservar, todos os dias, pelo menos 30 minutos blindados para atividades importantes que NÃO são urgentes. É contraintuitivo quando se está apagando incêndios, mas é exatamente o que vai reduzir os incêndios futuros.\n\nRecomendações para sair do modo Urgência:\n• PARE: Reserve 30 minutos HOJE para listar todas as urgências recorrentes da última semana\n• Para cada urgência recorrente, pergunte: 'Que ação preventiva eu poderia ter tomado 2 semanas atrás para evitar isso?'\n• Implemente a regra 80/20: identifique os 20% de causas que geram 80% das urgências e ataque-as primeiro\n• Comece cada dia com 15 minutos de planejamento ANTES de abrir e-mail ou WhatsApp\n• Aprenda a dizer 'não' diplomática mas firmemente — cada 'sim' irrefletido é um 'não' para suas prioridades\n• Delegue pelo menos 3 tarefas esta semana que você normalmente faria sozinho\n• Crie um 'buffer de emergência' de 1 hora por dia na agenda — tempo reservado APENAS para imprevistos reais\n• Busque apoio profissional: um coach ou mentor pode acelerar dramaticamente essa transição\n• Monitore seu nível de estresse: sono irregular, irritabilidade e dificuldade de concentração são sinais de alerta"
+        };
+      }
+
+      // 4) HOMER SIMPSON — Circunstância dominante >= 45
+      if (a >= 45 && a > b && a > c) {
+        return {
+          nome: "Homer Simpson",
+          subtitle: "Circunstância: Dominante | Refém das Distrações — O Ladrão Silencioso de Potencial",
+          desc: "Sua energia vital está sendo sequestrada por atividades que não geram nenhum resultado real. O tempo está passando e seus objetivos continuam no papel.",
+          texto: "Homer Simpson é o perfil mais perigoso da Tríade — não por ser agressivo, mas por ser silenciosamente destrutivo. Quem vive neste perfil passa o dia ocupado, mas no fim da jornada não consegue apontar nenhuma entrega relevante. O tempo escoa em reuniões sem pauta, conversas improdutivas, rolagem infinita de redes sociais, notificações constantes e tarefas que 'alguém pediu' mas que não geram valor real para ninguém.\n\nO cérebro se vicia em micro-recompensas de dopamina (cada like, cada mensagem lida, cada tarefa fácil concluída), criando um loop neuroquímico que sabota o foco profundo. Este mecanismo é idêntico ao que torna os jogos de celular e as redes sociais tão viciantes: recompensas pequenas, frequentes e imprevisíveis que mantêm o circuito de recompensa do cérebro permanentemente ativado em modo superficial.\n\nDo ponto de vista neurológico, a dominância circunstancial causa uma condição conhecida como 'fragmentação atencional crônica'. O córtex pré-frontal — responsável por planejamento, foco e decisões de longo prazo — é constantemente interrompido, impedindo a formação de conexões neurais profundas necessárias para o pensamento estratégico e a criatividade. Estudos da Universidade de Stanford demonstram que pessoas que fazem multitasking constante (característica típica do perfil circunstancial) apresentam: menor capacidade de filtrar informações irrelevantes, maior dificuldade de reter informações na memória de trabalho, redução mensurável na velocidade de alternância entre tarefas e maior suscetibilidade a distrações emocionais.\n\nO resultado de longo prazo é devastador: estagnação profissional, frustração crônica e um vazio existencial de quem sente que 'o tempo está passando e eu não estou evoluindo'. Relacionamentos se deterioram porque a pessoa está fisicamente presente mas mentalmente ausente. A carreira estagna porque não há investimento consistente em desenvolvimento. A saúde se degrada pela falta de disciplina em rotinas de autocuidado.\n\nA saída exige coragem radical: auditar impiedosamente cada hora do seu dia, eliminar os ladrões de tempo e redirecionar essa energia para o que realmente importa. É desconfortável no início — o cérebro vai resistir, pois está acostumado com as micro-doses constantes de dopamina barata. Mas após 21 a 30 dias de disciplina consistente, novos circuitos neurais começam a se formar, e a sensação de realização profunda que vem do trabalho significativo substitui progressivamente a necessidade de gratificação instantânea.\n\nRecomendações para recuperar o controle do seu tempo:\n• AUDITORIA RADICAL: Durante 3 dias, registre CADA atividade que faz em blocos de 30 minutos — sem julgamento, apenas registro\n• Analise o registro: marque em vermelho tudo que NÃO contribuiu para seus objetivos. O número vai te chocar.\n• Elimine notificações: desative TODAS as notificações do celular exceto chamadas e mensagens de emergência real\n• Implemente a técnica Pomodoro: 25 minutos de foco total + 5 minutos de pausa. Repita 4 vezes. Depois, pausa de 15 minutos\n• Estabeleça horários fixos para checagem de e-mail e redes sociais: 3 vezes ao dia no máximo\n• Crie uma lista de 'NÃO FAZER' — tão importante quanto a lista de tarefas é a lista de coisas que você DECIDE não fazer mais\n• Comece cada semana definindo 3 resultados inegociáveis que DEVEM ser entregues até sexta-feira\n• Encontre um parceiro de accountability — alguém que irá cobrar seus compromissos semanalmente\n• Substitua hábitos de distração por hábitos de construção: troque 30 minutos de rede social por 30 minutos de leitura ou exercício\n• Considere seriamente um processo de coaching — a mudança de padrões arraigados é significativamente mais rápida com acompanhamento profissional"
+        };
+      }
+
+      // 5) EQUILIBRISTA NA CORDA BAMBA — Fallback
+      return {
+        nome: "Equilibrista na Corda Bamba",
+        subtitle: "Distribuição Mista | Sem esfera claramente dominante — Zona de Risco Silencioso",
+        desc: "Você está dividido entre urgências e distrações, com pouco espaço para o que realmente importa. A aparente normalidade mascara uma armadilha perigosa.",
+        texto: "O Equilibrista vive uma realidade comum e perigosa: não há uma catástrofe evidente, mas também não há progresso claro. O tempo se distribui de forma difusa entre urgências pontuais, distrações circunstanciais e apenas uma fatia modesta dedicada ao que é verdadeiramente importante. Essa aparente 'normalidade' é, na verdade, uma armadilha — porque cria a ilusão de equilíbrio quando, na prática, nenhuma das três esferas está sendo gerida com intencionalidade.\n\nO Equilibrista costuma encerrar a semana com a sensação de que 'trabalhou muito, mas avançou pouco'. Projetos pessoais ficam eternamente no 'quando der tempo'. Metas de carreira são postergadas para 'o próximo semestre'. A saúde recebe atenção apenas quando um problema aparece. Os relacionamentos importantes são mantidos no 'piloto automático'.\n\nDo ponto de vista neurocientífico, o cérebro do Equilibrista opera num estado de 'vigilância difusa' — está parcialmente atento a tudo, mas profundamente focado em nada. Isso impede a entrada no Estado de Flow (fluxo), que requer blocos de pelo menos 20 a 30 minutos de atenção ininterrupta. Sem flow, a pessoa nunca acessa seu pico de performance cognitiva, onde residem os insights criativos, as soluções inovadoras e as decisões verdadeiramente estratégicas.\n\nEsta distribuição equilibrada entre as três esferas pode parecer 'razoável', mas na realidade é a mais difícil de corrigir, porque não gera a dor aguda que força a mudança. O Super Homem sente o burnout e busca ajuda. O Homer Simpson eventualmente enfrenta a estagnação e reage. Mas o Equilibrista pode permanecer anos neste padrão mediano, acreditando que 'está tudo bem', enquanto seu potencial real permanece inexplorado.\n\nO custo oculto deste perfil é o 'custo de oportunidade' — tudo aquilo que você PODERIA ter conquistado se tivesse investido seu tempo com mais intencionalidade. Promoções que não vieram. Projetos que não saíram do papel. Relacionamentos que não se aprofundaram. Uma versão melhor de si mesmo que ficou apenas no potencial.\n\nPara sair da corda bamba, o primeiro passo é radical clareza: definir as 3 prioridades inegociáveis da semana e proteger blocos de tempo exclusivos para elas. Paralelamente, é preciso identificar e eliminar pelo menos 2 ladrões de tempo por semana. Pequenos movimentos consistentes geram um efeito cascata impressionante em 90 dias.\n\nRecomendações para sair da zona mediana:\n• CLAREZA RADICAL: Defina AGORA seus 3 objetivos mais importantes para os próximos 90 dias — seja específico, mensurável e com prazo\n• Para cada objetivo, identifique a PRIMEIRA ação concreta que você pode executar esta semana\n• Crie blocos de 'tempo sagrado' na sua agenda: mínimo 1 hora por dia dedicada EXCLUSIVAMENTE a atividades da Esfera da Importância\n• Faça uma 'dieta de compromissos': elimine pelo menos 2 compromissos recorrentes que não contribuem para seus objetivos\n• Implemente a revisão semanal: todo domingo à noite ou segunda de manhã, revise a semana anterior e planeje a seguinte com intencionalidade\n• Estabeleça métricas pessoais: como você vai MEDIR se está progredindo em cada objetivo?\n• Encontre modelos: identifique 2 a 3 pessoas que você admira pela gestão do tempo e estude seus hábitos\n• Comece um diário de produtividade: 5 minutos no final do dia registrando o que funcionou e o que foi desperdiçado\n• Pratique a 'regra dos 2 minutos' de David Allen: se uma tarefa leva menos de 2 minutos, faça agora; se leva mais, agende ou delegue\n• AÇÃO IMEDIATA: Escolha UMA recomendação desta lista e execute HOJE. Não amanhã. Não na segunda-feira. HOJE."
+      };
+    }
+
+    /* ===============================================================
+       GRÁFICOS PIE FLAT PARA PDF
+       =============================================================== */
+
+    function createFlatPieBase64(pCir, pImp, pUrg) {
+      const canvas = document.createElement("canvas");
+      canvas.width = 800;
+      canvas.height = 800;
+      const ctx = canvas.getContext("2d");
+      const cx = 400, cy = 400, r = 360;
+
+      const data = [
+        { val: Number(pCir) || 0, color: "#FFD700", textColor: "#000000" },
+        { val: Number(pImp) || 0, color: "#0b63ce", textColor: "#FFFFFF" },
+        { val: Number(pUrg) || 0, color: "#dc2626", textColor: "#FFFFFF" }
+      ];
+
+      let startAngle = -Math.PI / 2;
+
+      data.forEach(d => {
+        if (d.val <= 0) return;
+        const sliceAngle = (d.val / 100) * 2 * Math.PI;
+        const endAngle = startAngle + sliceAngle;
+
+        ctx.beginPath();
+        ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, startAngle, endAngle);
+        ctx.closePath();
+        ctx.fillStyle = d.color;
+        ctx.fill();
+
+        ctx.lineWidth = 14;
+        ctx.strokeStyle = "#ffffff";
+        ctx.stroke();
+
+        const midAngle = startAngle + sliceAngle / 2;
+        const textX = cx + Math.cos(midAngle) * (r * 0.60);
+        const textY = cy + Math.sin(midAngle) * (r * 0.60);
+
+        ctx.fillStyle = d.textColor;
+        ctx.font = "bold 46px Arial, sans-serif";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "middle";
+        ctx.fillText(`${d.val}%`, textX, textY);
+
+        startAngle += sliceAngle;
+      });
+
+      return canvas.toDataURL("image/png");
+    }
+
+    function getProfileChartBase64(prof) {
+      const n = prof.nome;
+      if (n.includes("Homer")) return createFlatPieBase64(75, 10, 15);
+      if (n.includes("Equilibrista")) return createFlatPieBase64(45, 10, 45);
+      if (n.includes("Ferro")) return createFlatPieBase64(30, 60, 10);
+      if (n.includes("Thor")) return createFlatPieBase64(10, 70, 20);
+      if (n.includes("Super Homem")) return createFlatPieBase64(15, 10, 75);
+      return null;
+    }
+
+    function getProfileColor(profileName) {
+      if (profileName.includes("Thor") || profileName.includes("Homem de Ferro")) return [11, 99, 206];
+      if (profileName.includes("Homer")) return [212, 160, 23];
+      if (profileName.includes("Super Homem")) return [220, 38, 38];
+      if (profileName.includes("Equilibrista")) return [59, 130, 246];
+      return [11, 99, 206];
+    }
+    /* ===============================================================
+       CAPA PREMIUM — Inspirada na imagem Act Coaching DISC
+       Fundo branco limpo, silhueta de cabeça com engrenagens,
+       relógio analógico, ondas azuis corporativas topo/base
+       Visual para CEOs de Tesla, Apple, Samsung, Fortune 500
+       =============================================================== */
+
+    function drawPremiumCover(doc, pageW, pageH, formattedName, formattedProf, profileColor) {
+
+      // ── FUNDO BRANCO LIMPO ──
+      doc.setFillColor(255, 255, 255);
+      doc.rect(0, 0, pageW, pageH, 'F');
+
+      // ── ONDA SUPERIOR — 3 camadas sinuosas (azul navy) ──
+      // Camada 1 — azul mais escuro (fundo da onda)
+      doc.setFillColor(10, 37, 64);
+      doc.triangle(0, 0, pageW, 0, pageW, 42, 'F');
+      doc.triangle(0, 0, pageW, 42, 0, 58, 'F');
+
+      // Camada 2 — azul médio
+      doc.setFillColor(18, 60, 110);
+      doc.triangle(0, 0, pageW, 0, pageW, 30, 'F');
+      doc.triangle(0, 0, pageW, 30, 0, 46, 'F');
+
+      // Camada 3 — azul mais claro (accent)
+      doc.setFillColor(40, 90, 155);
+      doc.triangle(0, 0, pageW, 0, pageW, 20, 'F');
+      doc.triangle(0, 0, pageW, 20, 0, 34, 'F');
+
+      // Curva suave inferior da onda superior (simulação pixel a pixel)
+      doc.setFillColor(10, 37, 64);
+      for (let i = 0; i < pageW; i += 1.5) {
+        const waveY = 52 + Math.sin((i / pageW) * Math.PI * 1.2) * 16;
+        doc.rect(i, 44, 1.5, waveY - 44, 'F');
+      }
+      // Apagar abaixo da onda com branco
+      doc.setFillColor(255, 255, 255);
+      for (let i = 0; i < pageW; i += 1.5) {
+        const waveY = 54 + Math.sin((i / pageW) * Math.PI * 1.2) * 16;
+        doc.rect(i, waveY, 1.5, pageH, 'F');
+      }
+
+      // ── ONDA INFERIOR — espelhada ──
+      doc.setFillColor(10, 37, 64);
+      for (let i = 0; i < pageW; i += 1.5) {
+        const waveY = pageH - 52 - Math.sin((i / pageW) * Math.PI * 1.1) * 14;
+        doc.rect(i, waveY, 1.5, pageH - waveY, 'F');
+      }
+      // Faixas sólidas inferiores
+      doc.setFillColor(18, 60, 110);
+      doc.rect(0, pageH - 36, pageW, 36, 'F');
+      doc.setFillColor(10, 37, 64);
+      doc.rect(0, pageH - 26, pageW, 26, 'F');
+
+      // ── LOGO INSTITUTO IMPULSO — topo central ──
+      const logoY = 82;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(14);
+      doc.setTextColor(100, 116, 139);
+      doc.text("INSTITUTO IMPULSO", pageW / 2, logoY, { align: "center" });
+
+      doc.setFontSize(10);
+      doc.setTextColor(11, 99, 206);
+      doc.text("COACHING DE LIDERANÇA", pageW / 2, logoY + 8, { align: "center" });
+
+      // Linha decorativa fina
+      doc.setDrawColor(11, 99, 206);
+      doc.setLineWidth(0.6);
+      doc.line(pageW / 2 - 38, logoY + 13, pageW / 2 + 38, logoY + 13);
+
+      // ── TEXTO "Resultado da pesquisa de" ──
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(16);
+      doc.setTextColor(80, 90, 100);
+      doc.text("Resultado da pesquisa de", pageW / 2, logoY + 30, { align: "center" });
+
+      // ── TÍTULO PRINCIPAL ──
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(30);
+      doc.setTextColor(11, 42, 82);
+      doc.text("Gestão no Tempo", pageW / 2, logoY + 45, { align: "center" });
+
+      // Subtítulo metodologia
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(11);
+      doc.setTextColor(100, 116, 139);
+      doc.text("Metodologia da Tríade do Tempo", pageW / 2, logoY + 55, { align: "center" });
+
+      // ── ILUSTRAÇÃO CENTRAL: SILHUETA CABEÇA + ENGRENAGENS + RELÓGIO ──
+      const headCx = pageW / 2;
+      const headCy = 192;
+
+      // === SILHUETA DA CABEÇA (perfil lateral como na imagem) ===
+      // Crânio — elipse principal
+      doc.setFillColor(20, 50, 85);
+      doc.ellipse(headCx - 2, headCy - 5, 26, 30, 'F');
+
+      // Parte posterior do crânio (mais arredondada)
+      doc.setFillColor(20, 50, 85);
+      doc.ellipse(headCx - 10, headCy - 10, 20, 28, 'F');
+
+      // Rosto — recorte mais claro para dar profundidade
+      doc.setFillColor(28, 58, 95);
+      doc.ellipse(headCx + 3, headCy - 2, 18, 24, 'F');
+
+      // Nariz (triângulo sutil)
+      doc.setFillColor(20, 50, 85);
+      doc.triangle(headCx + 20, headCy - 2, headCx + 16, headCy + 6, headCx + 16, headCy - 8, 'F');
+
+      // Pescoço
+      doc.setFillColor(20, 50, 85);
+      doc.rect(headCx - 8, headCy + 23, 16, 16, 'F');
+
+      // Ombros (elipse larga)
+      doc.setFillColor(20, 50, 85);
+      doc.ellipse(headCx, headCy + 40, 36, 10, 'F');
+
+      // Área interna da cabeça (escura — onde ficam as engrenagens internas)
+      doc.setFillColor(15, 38, 65);
+      doc.ellipse(headCx - 5, headCy - 8, 15, 18, 'F');
+
+      // === FUNÇÃO PARA DESENHAR ENGRENAGEM DETALHADA ===
+      function drawGear(cx, cy, outerR, innerR, teeth, fillColor, strokeColor) {
+        // Círculo externo
+        doc.setFillColor(fillColor[0], fillColor[1], fillColor[2]);
+        doc.circle(cx, cy, outerR, 'F');
+
+        // Dentes da engrenagem
+        const toothH = outerR * 0.22;
+        const toothW = Math.max(1.0, outerR * 0.16);
+        for (let i = 0; i < teeth; i++) {
+          const angle = (i / teeth) * 2 * Math.PI;
+          const tx = cx + Math.cos(angle) * (outerR + toothH * 0.2);
+          const ty = cy + Math.sin(angle) * (outerR + toothH * 0.2);
+          doc.setFillColor(fillColor[0], fillColor[1], fillColor[2]);
+          doc.circle(tx, ty, toothW, 'F');
+        }
+
+        // Aro externo (borda)
+        if (strokeColor) {
+          doc.setDrawColor(strokeColor[0], strokeColor[1], strokeColor[2]);
+          doc.setLineWidth(0.4);
+          doc.circle(cx, cy, outerR, 'S');
+        }
+
+        // Furo central (branco)
+        doc.setFillColor(255, 255, 255);
+        doc.circle(cx, cy, innerR, 'F');
+
+        // Ponto central
+        doc.setFillColor(fillColor[0], fillColor[1], fillColor[2]);
+        doc.circle(cx, cy, innerR * 0.35, 'F');
+      }
+
+      // === CLUSTER DE ENGRENAGENS SAINDO DA CABEÇA ===
+      // Cores das engrenagens (tons de cinza/azul como na imagem)
+      const gDarkSteel  = [70, 85, 105];
+      const gMedSteel   = [120, 140, 165];
+      const gLightSteel = [175, 190, 210];
+      const gSilver     = [195, 205, 218];
+      const gGold       = [190, 170, 90];
+      const gGreen      = [16, 163, 127];
+      const gBlue       = [11, 99, 206];
+      const gStroke     = [150, 165, 185];
+
+      // Engrenagem GRANDE principal (saindo do topo da cabeça, direita)
+      drawGear(headCx + 18, headCy - 32, 14, 5.5, 12, gDarkSteel, gStroke);
+
+      // Engrenagem média (encaixada na grande)
+      drawGear(headCx + 36, headCy - 22, 10, 4, 10, gMedSteel, gStroke);
+
+      // Engrenagem média-pequena (acima à direita)
+      drawGear(headCx + 30, headCy - 44, 8, 3.2, 8, gLightSteel, gStroke);
+
+      // Engrenagem pequena (extremidade direita)
+      drawGear(headCx + 48, headCy - 36, 6.5, 2.5, 7, gSilver, gStroke);
+
+      // Engrenagem pequena (abaixo à direita)
+      drawGear(headCx + 44, headCy - 14, 5.5, 2, 7, gGold, gStroke);
+
+      // Engrenagens à esquerda da cabeça
+      drawGear(headCx - 28, headCy - 36, 10, 4, 10, gMedSteel, gStroke);
+      drawGear(headCx - 16, headCy - 48, 7, 2.8, 8, gLightSteel, gStroke);
+      drawGear(headCx - 40, headCy - 26, 6, 2.3, 7, gSilver, gStroke);
+      drawGear(headCx - 34, headCy - 46, 5, 2, 6, gGold, gStroke);
+
+      // Engrenagem VERDE dentro da cabeça (destaque — como na imagem)
+      drawGear(headCx + 2, headCy - 10, 5.5, 2.2, 7, gGreen, null);
+
+      // Engrenagem AZUL dentro da cabeça
+      drawGear(headCx - 8, headCy - 18, 4, 1.6, 6, gBlue, null);
+
+      // Mini engrenagens de conexão
+      drawGear(headCx + 8, headCy - 22, 3, 1.2, 5, gDarkSteel, null);
+      drawGear(headCx + 50, headCy - 48, 4, 1.5, 6, gLightSteel, gStroke);
+
+      // Linhas pontilhadas conectando engrenagens (como na imagem)
+      doc.setDrawColor(180, 195, 215);
+      doc.setLineWidth(0.3);
+      doc.setLineDashPattern([1.5, 1.5], 0);
+      doc.line(headCx + 18, headCy - 18, headCx + 36, headCy - 12);
+      doc.line(headCx - 18, headCy - 26, headCx - 28, headCy - 26);
+      doc.line(headCx + 30, headCy - 36, headCx + 48, headCy - 36);
+      doc.setLineDashPattern([], 0); // Reset dash
+
+      // === RELÓGIO ANALÓGICO (canto superior direito da ilustração) ===
+      const clockCx = headCx + 55;
+      const clockCy = headCy - 52;
+      const clockR = 13;
+
+      // Sombra sutil do relógio
+      doc.setFillColor(220, 225, 235);
+      doc.circle(clockCx + 0.5, clockCy + 0.5, clockR + 1, 'F');
+
+      // Moldura externa (prata)
+      doc.setFillColor(180, 190, 205);
+      doc.circle(clockCx, clockCy, clockR + 1, 'F');
+
+      // Face branca
+      doc.setFillColor(252, 253, 255);
+      doc.circle(clockCx, clockCy, clockR, 'F');
+
+      // Borda interna fina
+      doc.setDrawColor(140, 155, 175);
+      doc.setLineWidth(0.5);
+      doc.circle(clockCx, clockCy, clockR - 0.5, 'S');
+
+      // Marcações das 12 horas
+      for (let h = 0; h < 12; h++) {
+        const angle = (h / 12) * 2 * Math.PI - Math.PI / 2;
+        const isMainHour = (h % 3 === 0);
+        const mInner = isMainHour ? clockR - 3.5 : clockR - 2.5;
+        const mOuter = clockR - 1.2;
+        const x1 = clockCx + Math.cos(angle) * mInner;
+        const y1 = clockCy + Math.sin(angle) * mInner;
+        const x2 = clockCx + Math.cos(angle) * mOuter;
+        const y2 = clockCy + Math.sin(angle) * mOuter;
+        doc.setDrawColor(50, 60, 75);
+        doc.setLineWidth(isMainHour ? 0.8 : 0.4);
+        doc.line(x1, y1, x2, y2);
+      }
+
+      // Ponteiro de hora (10h10 — posição clássica de vitrine)
+      const hourAngle = ((10 + 10 / 60) / 12) * 2 * Math.PI - Math.PI / 2;
+      doc.setDrawColor(20, 35, 60);
+      doc.setLineWidth(1.2);
+      doc.line(clockCx, clockCy, clockCx + Math.cos(hourAngle) * (clockR * 0.5), clockCy + Math.sin(hourAngle) * (clockR * 0.5));
+
+      // Ponteiro de minuto
+      const minAngle = (10 / 60) * 2 * Math.PI - Math.PI / 2;
+      doc.setDrawColor(20, 35, 60);
+      doc.setLineWidth(0.7);
+      doc.line(clockCx, clockCy, clockCx + Math.cos(minAngle) * (clockR * 0.72), clockCy + Math.sin(minAngle) * (clockR * 0.72));
+
+      // Ponteiro de segundo (vermelho, fino)
+      const secAngle = (35 / 60) * 2 * Math.PI - Math.PI / 2;
+      doc.setDrawColor(220, 38, 38);
+      doc.setLineWidth(0.3);
+      doc.line(clockCx, clockCy, clockCx + Math.cos(secAngle) * (clockR * 0.78), clockCy + Math.sin(secAngle) * (clockR * 0.78));
+
+      // Ponto central do relógio
+      doc.setFillColor(11, 42, 82);
+      doc.circle(clockCx, clockCy, 1.3, 'F');
+      doc.setFillColor(220, 38, 38);
+      doc.circle(clockCx, clockCy, 0.6, 'F');
+
+      // ── NOME DO PARTICIPANTE ──
+      const nameStartY = 242;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(22);
+      doc.setTextColor(11, 42, 82);
+      const nameLines = doc.splitTextToSize(formattedName, pageW - 60);
+      let nY = nameStartY;
+      nameLines.forEach(function(ln) {
+        doc.text(ln, pageW / 2, nY, { align: "center" });
+        nY += 10;
+      });
+
+      // Cargo/Profissão
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(13);
+      doc.setTextColor(100, 116, 139);
+      doc.text(formattedProf, pageW / 2, nY + 5, { align: "center" });
+
+      // Linha divisória elegante
+      doc.setDrawColor(207, 230, 255);
+      doc.setLineWidth(0.4);
+      doc.line(pageW / 2 - 45, nY + 14, pageW / 2 + 45, nY + 14);
+
+      // Data
+      const dateStr = new Date().toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "long",
+        year: "numeric"
+      });
+      doc.setFontSize(11);
+      doc.setTextColor(150, 160, 175);
+      doc.text(dateStr, pageW / 2, nY + 22, { align: "center" });
+
+      // ── RODAPÉ DA CAPA (sobre a faixa navy inferior) ──
+      // Logo canto esquerdo
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(9);
+      doc.setTextColor(56, 189, 248);
+      doc.text("INSTITUTO IMPULSO", 16, pageH - 12);
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(7);
+      doc.setTextColor(140, 165, 200);
+      doc.text("Coaching de Liderança", 16, pageH - 7);
+
+      // Coach canto direito
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.setTextColor(200, 215, 235);
+      doc.text("Master Coach Rogério Braga", pageW - 16, pageH - 12, { align: "right" });
+      doc.setFont("helvetica", "normal");
+      doc.setFontSize(7);
+      doc.setTextColor(140, 165, 200);
+      doc.text("A mudança pode acontecer em um instante", pageW - 16, pageH - 7, { align: "right" });
+    }
+
+    /* ===============================================================
+       GERAÇÃO DO PDF EXECUTIVO COMPLETO
+       6 seções integrais + capa premium + rodapé profissional
+       =============================================================== */
+
+    async function generatePdfDocAndFileName() {
+      const data = window._triadeData;
+      if (!data) throw new Error("Sem dados para gerar PDF.");
+      if (!window.jspdf) throw new Error("jsPDF não está disponível.");
+
+      const { jsPDF } = window.jspdf;
+      const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+      const pageW = 210, pageH = 297, margin = 16;
+      const contentW = pageW - margin * 2;
+      let y = margin;
+
+      const { prettyData, totals, percentages, energyLeak, triadChartImg, idealChartImg } = data;
+      const formattedName = toTitleCase(sanitizeInput(prettyData.nome));
+      const formattedProf = toTitleCase(sanitizeInput(prettyData.profissao));
+      const prof = triadPickProfile(percentages.A, percentages.B, percentages.C);
+      const profileColor = getProfileColor(prof.nome);
+
+      /* ============================================
+         PÁGINA 1: CAPA PREMIUM
+         ============================================ */
+      drawPremiumCover(doc, pageW, pageH, formattedName, formattedProf, profileColor);
+
+      /* ============================================
+         PÁGINAS DE CONTEÚDO
+         ============================================ */
+      doc.addPage();
+      y = margin;
+
+      function drawProfessionalHeader() {
+        doc.setFillColor(profileColor[0], profileColor[1], profileColor[2]);
+        doc.rect(0, 0, pageW, 12, 'F');
+        doc.setTextColor(255, 255, 255);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(10);
+        doc.text("Instituto Impulso Coaching de Liderança", margin, 8);
+        doc.setFontSize(8);
+        doc.text(formattedName.substring(0, 30), pageW - margin, 8, { align: 'right' });
+        y = margin + 10;
+      }
+
+      function newPageIfNeeded(extraH) {
+        if (y + extraH > pageH - 25) {
+          doc.addPage();
+          drawProfessionalHeader();
+        }
+      }
+
+      function forceNewPage() {
+        doc.addPage();
+        drawProfessionalHeader();
+      }
+
+      function addSectionTitle(text) {
+        newPageIfNeeded(18);
+        y += 4;
+        doc.setFillColor(248, 250, 252);
+        doc.rect(margin, y - 5, contentW, 8, 'F');
+        doc.setDrawColor(profileColor[0], profileColor[1], profileColor[2]);
+        doc.setLineWidth(2);
+        doc.line(margin, y - 5, margin, y + 3);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(14);
+        doc.setTextColor(11, 42, 82);
+        doc.text(text.toUpperCase(), margin + 4, y + 1);
+        y += 10;
+      }
+
+      function addDataRow(label1, val1, label2, val2) {
+        newPageIfNeeded(6);
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(9);
+        doc.setTextColor(100, 116, 139);
+        doc.text(label1 + ":", margin, y);
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(51, 51, 51);
+        doc.text(String(val1), margin + 25, y);
+        if (label2) {
+          doc.setFont("helvetica", "bold");
+          doc.setTextColor(100, 116, 139);
+          doc.text(label2 + ":", margin + 90, y);
+          doc.setFont("helvetica", "normal");
+          doc.setTextColor(51, 51, 51);
+          doc.text(String(val2), margin + 115, y);
+        }
+        y += 6;
+      }
+
+      function addParagraph(text, fontSize, lineH) {
+        fontSize = fontSize || 9.5;
+        lineH = lineH || 5;
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(fontSize);
+        doc.setTextColor(51, 51, 51);
+        const lines = doc.splitTextToSize(String(text), contentW);
+        lines.forEach(function(ln) {
+          newPageIfNeeded(lineH);
+          doc.text(ln, margin, y);
+          y += lineH;
+        });
+        y += 2;
+      }
+
+      drawProfessionalHeader();
+
+      /* --- SEÇÃO 1: PARTICIPANTE --- */
+      addSectionTitle("1. Participante");
+      addDataRow("Nome", formattedName, "Idade", sanitizeInput(prettyData.idade) + " anos");
+      addDataRow("Cargo", formattedProf, "Formação", sanitizeInput(prettyData.escolaridade));
+      addDataRow("E-mail", sanitizeInput(prettyData.email).toLowerCase(), "WhatsApp", sanitizeInput(prettyData.whatsapp));
+      y += 8;
+
+      /* --- SEÇÃO 2: RESULTADO --- */
+      addSectionTitle("2. Resultado da Gestão no Tempo");
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.setTextColor(51, 51, 51);
+      doc.text("Distribuição do Tempo:", margin, y);
+      y += 6;
+      addDataRow("Importância", Number(percentages.B).toFixed(1) + "%", "Urgência", Number(percentages.C).toFixed(1) + "%");
+      addDataRow("Circunstância", Number(percentages.A).toFixed(1) + "%", "Total de Pontos", totals.General);
+      y += 8;
+
+      // Alerta de vazamento
+      doc.setFillColor(254, 242, 242);
+      doc.setDrawColor(252, 165, 165);
+      doc.setLineWidth(0.5);
+      doc.roundedRect(margin, y, contentW, 10, 2, 2, "FD");
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(15);
+      doc.setTextColor(185, 28, 28);
+      doc.text("ALERTA: Índice de Vazamento de Energia vital: " + energyLeak, margin + 5, y + 6.5);
+      y += 16;
+
+      /* --- SEÇÃO 3: DIAGNÓSTICO DO PERFIL --- */
+      addSectionTitle("3. Diagnóstico de Comparação do Perfil");
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(13);
+      doc.setTextColor(profileColor[0], profileColor[1], profileColor[2]);
+      doc.text("Perfil Encontrado: " + prof.nome, margin, y);
+      y += 6;
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(10);
+      doc.setTextColor(11, 42, 82);
+      doc.text(prof.subtitle, margin, y);
+      y += 6;
+      addParagraph(prof.desc, 10, 5);
+      y += 2;
+      addParagraph(prof.texto, 9.5, 5);
+
+      /* --- SEÇÃO 4: ANÁLISE GRÁFICA --- */
+      forceNewPage();
+      addSectionTitle("4. Análise Gráfica Comparativa");
+
+      const boxSize = 80;
+      const gap = 10;
+      const totalChartW = (boxSize * 2) + gap;
+      const startX = margin + (contentW - totalChartW) / 2;
+      let boxY = y + 5;
+
+      doc.setDrawColor(207, 230, 255);
+      doc.setLineWidth(0.5);
+      doc.roundedRect(startX, boxY, boxSize, boxSize, 3, 3, "S");
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(11);
+      doc.setTextColor(11, 42, 82);
+      doc.text("Sua Gestão Atual", startX + (boxSize / 2), boxY - 3, { align: "center" });
+
+      try {
+        if (triadChartImg) doc.addImage(triadChartImg, "PNG", startX + 2, boxY + 2, boxSize - 4, boxSize - 4);
+      } catch(e) {
+        console.warn("Erro gráfico usuário:", e);
+      }
+
+      doc.roundedRect(startX + boxSize + gap, boxY, boxSize, boxSize, 3, 3, "S");
+      doc.text("Gestão Ideal", startX + boxSize + gap + (boxSize / 2), boxY - 3, { align: "center" });
+
+      try {
+        if (idealChartImg) doc.addImage(idealChartImg, "PNG", startX + boxSize + gap + 2, boxY + 2, boxSize - 4, boxSize - 4);
+      } catch(e) {
+        console.warn("Erro gráfico ideal:", e);
+      }
+
+      y = boxY + boxSize + 15;
+
+      doc.setFont("helvetica", "bold");
+      doc.setFontSize(12);
+      doc.setTextColor(11, 99, 206);
+      doc.text("O Poder de Organizar Bem o Seu Tempo", margin, y);
+      y += 7;
+
+      const textoComparativo = "Quando você compara como usa seu tempo hoje com o que seria o ideal, você não está apenas olhando para a sua agenda. Na verdade, está enxergando como sua mente funciona e para onde sua energia está indo. Existe um modelo considerado ideal para pessoas que produzem muito bem: 70% do tempo em coisas importantes, 20% em coisas urgentes e 10% em situações circunstanciais (interrupções, distrações e tarefas que aparecem de repente). Esse equilíbrio ajuda o cérebro a funcionar melhor. Quando a maior parte do tempo é dedicada ao que realmente importa, a pessoa entra em um estado de alta produtividade, conhecido como estado de flow — quando o trabalho flui, a mente fica focada e as coisas rendem mais.\n\nPor outro lado, quando vivemos apagando incêndios (só resolvendo urgências) ou gastando tempo com distrações, o cérebro entra em modo de estresse. Isso aumenta o cortisol, o hormônio do estresse, e nos prende em pequenas recompensas rápidas que tiram o foco do que realmente gera resultados. Ao perceber a diferença entre como você usa seu tempo hoje e como poderia usar, fica mais fácil identificar onde sua energia está sendo desperdiçada.\n\nQuando você começa, pouco a pouco, a colocar mais tempo nas coisas realmente importantes, vários benefícios aparecem: você melhora seu equilíbrio emocional; passa a enxergar melhor o todo das situações; toma decisões mais claras; reduz o risco de esgotamento e burnout.\n\nO objetivo dessa análise não é virar um robô perfeito. É simplesmente desenvolver consciência e intenção. Cada pedacinho de tempo que você tira das distrações ou das urgências e coloca em coisas realmente importantes aumenta muito sua capacidade de: liderar pessoas; tomar decisões difíceis; criar soluções novas; construir resultados duradouros na carreira e na vida.";
+      addParagraph(textoComparativo, 10.5, 6);
+
+      /* --- SEÇÃO 5: AS 3 ESFERAS --- */
+      forceNewPage();
+      addSectionTitle("5. Inteligência do Método - As 3 Esferas");
+
+      function addSphereExpl(title, colorRGB, text) {
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(14);
+        doc.setTextColor(colorRGB[0], colorRGB[1], colorRGB[2]);
+        newPageIfNeeded(12);
+        doc.text(title, margin, y);
+        y += 5;
+        addParagraph(text, 9.5, 4.8);
+        y += 5;
+      }
+
+      addSphereExpl(
+        "Esfera Importante (Azul) - Alta Performance e Estado de Flow",
+        [11, 99, 206],
+        "A esfera do Importante reúne as atividades estratégicas que geram resultados consistentes e sustentáveis de curto, médio e longo prazo. É o território dos líderes de sucesso, onde residem os projetos de vida, metas estruturadas, saúde integral e desenvolvimento de relacionamentos. Tarefas bem planejadas nunca se tornam urgentes. Viver nesta esfera é sinônimo de governança, clareza e controle absoluto sobre sua carreira. Quando a maior parte do seu tempo reside aqui, o cérebro opera com frequência no 'Estado de Flow' (fluxo contínuo), maximizando o potencial criativo, o engajamento profundo e a sensação plena de realização e propósito."
+      );
+
+      addSphereExpl(
+        "Esfera da Urgência (Vermelha) - O Gerador de Estresse e Burnout",
+        [220, 38, 38],
+        "Atividades com prazo exaurido que exigem reação imediata. Operar constantemente nesta esfera força o organismo a trabalhar sob picos nocivos de estresse (inundando o corpo de cortisol e adrenalina), provocando decisões precipitadas e queda drástica na inteligência emocional. A urgência constante não é sinônimo de importância ou alta produtividade; é, na verdade, um sintoma claro de falhas no planejamento prévio e dificuldade em delegar ou dizer 'não'. O preço pago por líderes que habitam esta esfera de forma crônica é a deterioração da saúde física e mental, beirando a estafa, o esgotamento extremo e a Síndrome de Burnout."
+      );
+
+      addSphereExpl(
+        "Esfera Circunstancial (Amarela) - Ladrões de Tempo e Fugas de Dopamina",
+        [212, 160, 23],
+        "Engloba tarefas desnecessárias, distrações e consumo passivo de tempo (reuniões sem pauta, excesso de redes sociais, interrupções fúteis e procrastinação mascarada). Disfarçam-se de 'ocupação' e ativam circuitos de recompensa rápida e barata no cérebro (loop de dopamina), dando uma falsa e passageira sensação de alívio. No fundo, operam como os maiores ladrões silenciosos do seu progresso, sugando sua energia vital e desviando-o de seus objetivos reais. A longo prazo, a predominância desta esfera resulta em forte estagnação profissional e um profundo sentimento de frustração e vazio."
+      );
+
+      /* --- SEÇÃO 6: PERFIS COMPARATIVOS --- */
+      forceNewPage();
+      addSectionTitle("6. Perfis Comparativos");
+
+      const profilesData = [
+        triadPickProfile(25, 10, 65),
+        triadPickProfile(75, 10, 15),
+        triadPickProfile(45, 10, 45),
+        triadPickProfile(30, 60, 10),
+        triadPickProfile(10, 70, 20)
+      ];
+
+      profilesData.forEach(function(p) {
+        const chartImg = getProfileChartBase64(p);
+        const chartSize = 65;
+        const textX = margin + chartSize + 15;
+        const textColW = contentW - chartSize - 20;
+
+        let textH = 6;
+        doc.setFontSize(8.5);
+        const subLines = doc.splitTextToSize(p.subtitle, textColW);
+        textH += (subLines.length * 4) + 2;
+
+        doc.setFontSize(9.5);
+        const descLines = doc.splitTextToSize(p.desc, textColW);
+        textH += (descLines.length * 4.5) + 2;
+
+        doc.setFontSize(9);
+        const bodyLines = doc.splitTextToSize(p.texto, textColW);
+        textH += (bodyLines.length * 4.5) + 2;
+
+        const cardHeight = Math.max(chartSize + 10, textH + 10);
+        newPageIfNeeded(cardHeight + 8);
+
+        const bY = y;
+
+        doc.setFillColor(248, 250, 252);
+        doc.setDrawColor(203, 213, 225);
+        doc.roundedRect(margin, bY, contentW, cardHeight, 2, 2, "FD");
+
+        const pColor = getProfileColor(p.nome);
+        doc.setFillColor(pColor[0], pColor[1], pColor[2]);
+        doc.rect(margin, bY, contentW, 8, 'F');
+
+        doc.rect(margin + 2, bY + 8, contentW - 4, 0.2, 'F');
+
+        doc.setFillColor(11, 99, 206);
+        doc.rect(margin, bY, 3, cardHeight, 'F');
+
+        if (chartImg) {
+          const chartY = bY + 8 + (cardHeight - 8 - chartSize) / 2;
+          try {
+            doc.addImage(chartImg, "PNG", margin + 8, chartY, chartSize, chartSize);
+          } catch(e) {
+            console.warn("Erro mini-gráfico:", e);
+          }
+        }
+
+        let tY = bY + 8 + 5;
+
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(12);
+        doc.setTextColor(11, 42, 82);
+        doc.text(p.nome, textX, tY);
+        tY += 5;
+
+        doc.setFontSize(8.5);
+        doc.setTextColor(11, 99, 206);
+        doc.text(subLines, textX, tY);
+        tY += (subLines.length * 4) + 1;
+
+        doc.setFontSize(9.5);
+        doc.setTextColor(51, 51, 51);
+        doc.text(descLines, textX, tY);
+        tY += (descLines.length * 4.5) + 1;
+
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(9);
+        doc.setTextColor(100, 116, 139);
+        doc.text(bodyLines, textX, tY);
+
+        y = bY + cardHeight + 6;
+      });
+
+      /* ============================================
+         RODAPÉ EM TODAS AS PÁGINAS (exceto capa)
+         ============================================ */
+
+      const totalPages = doc.internal.getNumberOfPages();
+      for (let i = 2; i <= totalPages; i++) {
+        doc.setPage(i);
+
+        doc.setDrawColor(200, 210, 220);
+        doc.setLineWidth(0.5);
+        doc.line(margin, pageH - 12, pageW - margin, pageH - 12);
+
+        doc.setFont("helvetica", "bold");
+        doc.setFontSize(8);
+        doc.setTextColor(11, 42, 82);
+        doc.text("Instituto Impulso Coaching de Liderança", margin, pageH - 8);
+
+        doc.setFont("helvetica", "normal");
+        doc.setTextColor(100, 116, 139);
+        doc.text("Desenvolvimento de Alta Performance | Master Coach Rogério Braga", margin, pageH - 4.5);
+        doc.text("Página " + (i - 1) + " de " + (totalPages - 1), pageW - margin, pageH - 8, { align: 'right' });
+      }
+
+      const safeName = formattedName.replace(/\s+/g, "_").replace(/[^a-zA-Z0-9_]/g, "");
+      const pdfFileName = "GestaoNoTempo_" + safeName + ".pdf";
+      return { doc: doc, pdfFileName: pdfFileName };
+    }
+
+    /* ===============================================================
+       ORQUESTRAÇÃO DE ENVIO AUTOMÁTICO
+       =============================================================== */
+
+    async function autoSendWithPdf() {
+      if (autoSendInProgress || autoSendDone) return;
+      autoSendInProgress = true;
+
+      try {
+        setAutoSendStatus("⏳ Gerando relatório e processando inteligência de dados...", "pending");
+
+        const data = window._triadeData;
+        if (!data) throw new Error("Sem dados.");
+
+        let triadChartImg = null, idealChartImg = null;
+        try {
+          triadChartImg = charts.user ? charts.user.toBase64Image() : document.getElementById("triadChart").toDataURL("image/png");
+          idealChartImg = charts.ideal ? charts.ideal.toBase64Image() : document.getElementById("idealTriadChart").toDataURL("image/png");
+        } catch(e) {
+          console.warn("Gráfico não capturado:", e);
+        }
+
+        data.triadChartImg = triadChartImg;
+        data.idealChartImg = idealChartImg;
+
+        const { doc, pdfFileName } = await generatePdfDocAndFileName();
+        const base64 = doc.output("datauristring").split(",")[1];
+        const prof = triadPickProfile(data.percentages.A, data.percentages.B, data.percentages.C);
+
+        const payload = {
+          apiKey: API_KEY,
+          testId: "triade_v1",
+          nome: data.prettyData.nome,
+          email: data.prettyData.email,
+          whatsapp: data.prettyData.whatsapp,
+          idade: data.prettyData.idade,
+          profissao: data.prettyData.profissao,
+          escolaridade: data.prettyData.escolaridade,
+          percImportancia: data.percentages.B + "%",
+          percUrgencia: data.percentages.C + "%",
+          percCircunstancia: data.percentages.A + "%",
+          vazamentoEnergia: data.energyLeak,
+          perfil: prof.nome,
+          pdfBase64: base64,
+          pdfFileName: pdfFileName,
+          sendEmail: true
+        };
+
+        await postResultToScript(payload);
+        await wait(1000);
+
+        autoSendDone = true;
+        document.getElementById('auto-send-status').textContent = "";
+        document.getElementById('final-success-message').style.display = 'block';
+
+      } catch (e) {
+        console.error(e);
+        emailSendAttempts++;
+        if (emailSendAttempts < MAX_EMAIL_ATTEMPTS) {
+          setAutoSendStatus("⚠️ Conectando servidor de alta performance (" + emailSendAttempts + "/" + MAX_EMAIL_ATTEMPTS + ")...", "error");
+          autoSendInProgress = false;
+          await wait(2500);
+          await autoSendWithPdf();
+          return;
+        } else {
+          setAutoSendStatus("❌ Falha de rede. Por favor, avise sua assessoria no Instituto Impulso.", "error");
+        }
+      } finally {
+        autoSendInProgress = false;
+      }
+    }
+
+    /* ===============================================================
+       QUESTIONÁRIO — 18 PERGUNTAS IDÊNTICAS
+       =============================================================== */
+
+    const questions = [
+      "1. Costumo ir a eventos, festas ou cursos, mesmo sem ter muita vontade, para agradar meu chefe, amigos ou família.",
+      "2. Não consigo realizar tudo que me propus fazer no dia e preciso fazer hora extra e levar trabalho para casa.",
+      "3. Quando recebo uma nova notificação no WhatsApp, Instagram, e-mail, etc, costumo dar uma olhada para checar o conteúdo.",
+      "4. Costumo visitar com regularidade pessoas relevantes em minha vida como amigos, parentes e filhos.",
+      "5. É comum aparecer problemas inesperados no meu dia a dia.",
+      "6. Assumo compromissos com outras pessoas ou aceito novas funções na empresa, mesmo que não goste muito da nova atividade, se for para aumentar meus rendimentos ou obter uma promoção.",
+      "7. Tenho um tempo definido para dedicar a mim mesmo e nele, posso fazer o que quiser.",
+      "8. Costumo deixar para fazer relatórios, imposto de renda, compras de Natal, estudar para provas e outras tarefas perto do prazo de entrega.",
+      "9. Nos dias de descanso, costumo passar boa parte do dia assistindo à televisão, jogando ou rolando o feed de redes sociais, internet e apps como WhatsApp.",
+      "10. Faço um planejamento por escrito de tudo que preciso fazer durante minha semana.",
+      "11. Posso afirmar que estou conseguindo realizar tudo que gostaria em minha vida e que o tempo está passando na velocidade correta.",
+      "12. Costumo participar de reuniões sem saber direito o conteúdo, o porquê devo participar ou a que resultado aquele encontro pode levar.",
+      "13. Consigo melhores resultados e me sinto mais produtivo quando estou sob pressão ou com o prazo curto.",
+      "14. Quando quero alguma coisa, deixo esse objetivo por escrito, estabeleço prazos em minha agenda, monitoro os resultados obtidos e os comparo com os esperados.",
+      "15. Leio muitas mensagens desnecessárias no WhatsApp, Instagram, e-mails, etc., com piadas, correntes, propagandas, apresentações, produtos e etc.",
+      "16. Estive atrasado com minhas tarefas ou reuniões nas últimas semanas.",
+      "17. Faço esporte com regularidade, me alimento da forma adequada e tenho o lazer que gostaria.",
+      "18. É comum reduzir meu horário de almoço ou até mesmo comer enquanto trabalho para concluir um projeto ou tarefa."
+    ];
+
+    const optLabels = [
+      { v: 1, t: "1. Nunca" },
+      { v: 2, t: "2. Raramente" },
+      { v: 3, t: "3. Às vezes" },
+      { v: 4, t: "4. Quase sempre" },
+      { v: 5, t: "5. Sempre" }
+    ];
+
+    const circumstance = [1, 6, 9, 12, 15];
+    const importance = [4, 7, 10, 11, 14, 17];
+    const urgency = [2, 3, 5, 8, 13, 16, 18];
+
+    let currentIndex = 0;
+    let autoAdvanceTimeout = null;
+    const answers = new Array(18).fill(null);
+    let charts = { user: null, ideal: null };
+
+    const stepIntro = document.getElementById("step-intro");
+    const stepQuiz = document.getElementById("step-quiz");
+    const stepResults = document.getElementById("step-results");
+    const elName = document.getElementById("name");
+    const elWhatsapp = document.getElementById("whatsapp");
+    const elEmail = document.getElementById("email");
+    const elProfession = document.getElementById("profession");
+    const elAge = document.getElementById("age");
+    const elEscolaridade = document.getElementById("escolaridade");
+    const btnStart = document.getElementById("btn-start");
+    const btnPrev = document.getElementById("btn-prev");
+    const btnNext = document.getElementById("btn-next");
+    const btnBackQuiz = document.getElementById("btn-back-quiz");
+    const elQCurrent = document.getElementById("q-current");
+    const elAnsweredCount = document.getElementById("answered-count");
+    const elProgressFill = document.getElementById("progress-fill");
+    const elQuestionText = document.getElementById("question-text");
+    const elOptions = document.getElementById("options");
+
+    function showStep(step) {
+      [stepIntro, stepQuiz, stepResults].forEach(function(s) { s.classList.remove("active"); });
+      step.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function validateIntro() {
+      const name = elName.value.trim();
+      const whatsapp = elWhatsapp.value.trim();
+      const email = elEmail.value.trim();
+      const prof = elProfession.value.trim();
+      const age = elAge.value.trim();
+      const escolaridade = elEscolaridade.value;
+
+      const okName = !!name;
+      const okWhatsapp = whatsapp.length >= 14;
+      const okEmail = validateEmail(email);
+      const okProf = !!prof;
+      const okAge = age.length > 0 && Number(age) >= 10 && Number(age) <= 99;
+      const okEscolaridade = !!escolaridade;
+
+      document.getElementById("name-error").style.display = okName ? "none" : "block";
+      document.getElementById("whatsapp-error").style.display = okWhatsapp ? "none" : "block";
+      document.getElementById("email-error").style.display = okEmail ? "none" : "block";
+      document.getElementById("profession-error").style.display = okProf ? "none" : "block";
+      document.getElementById("age-error").style.display = okAge ? "none" : "block";
+      document.getElementById("escolaridade-error").style.display = okEscolaridade ? "none" : "block";
+
+      return okName && okWhatsapp && okEmail && okProf && okAge && okEscolaridade;
+    }
+
+    elWhatsapp.addEventListener('input', function (e) {
+      let x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+      e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+      validateIntro();
+    });
+
+    elAge.addEventListener('input', function (e) {
+      e.target.value = e.target.value.replace(/\D/g, '');
+      validateIntro();
+    });
+
+    elName.addEventListener("input", validateIntro);
+    elEmail.addEventListener("input", validateIntro);
+    elProfession.addEventListener("input", validateIntro);
+    elEscolaridade.addEventListener("change", validateIntro);
+
+    btnStart.addEventListener("click", function() {
+      if (!validateIntro()) return;
+      showStep(stepQuiz);
+      renderQuestion();
+      updateProgressUI();
+    });
+
+    function renderQuestion() {
+      elQCurrent.textContent = String(currentIndex + 1);
+      elQuestionText.textContent = questions[currentIndex];
+      elOptions.innerHTML = "";
+      const selected = answers[currentIndex];
+
+      optLabels.forEach(function(opt) {
+        const div = document.createElement("div");
+        div.className = "opt";
+        div.setAttribute("role", "radio");
+        div.setAttribute("tabindex", "0");
+        div.setAttribute("aria-checked", selected === opt.v ? "true" : "false");
+        div.dataset.value = String(opt.v);
+        div.textContent = opt.t;
+        div.addEventListener("click", function() { selectOption(opt.v); });
+        div.addEventListener("keydown", function(e) {
+          if (e.key === "Enter" || e.key === " ") {
+            e.preventDefault();
+            selectOption(opt.v);
+          }
+        });
+        elOptions.appendChild(div);
+      });
+
+      btnPrev.disabled = currentIndex === 0;
+
+      if (currentIndex === 17) {
+        btnNext.style.display = "inline-flex";
+        btnNext.textContent = "Finalizar Análise e Gerar Relatório";
+      } else {
+        btnNext.style.display = "none";
+      }
+    }
+
+    function selectOption(value) {
+      answers[currentIndex] = value;
+      var children = elOptions.children;
+      for (var i = 0; i < children.length; i++) {
+        children[i].setAttribute("aria-checked", children[i].dataset.value === String(value) ? "true" : "false");
+      }
+      updateProgressUI();
+      if (autoAdvanceTimeout) clearTimeout(autoAdvanceTimeout);
+      if (currentIndex < 17) {
+        autoAdvanceTimeout = setTimeout(function() {
+          currentIndex++;
+          renderQuestion();
+          updateProgressUI();
+        }, 400);
+      }
+    }
+
+    function updateProgressUI() {
+      var answered = answers.filter(function(v) { return v !== null; }).length;
+      elAnsweredCount.textContent = String(answered);
+      var percent = Math.round((answered / 18) * 100);
+      elProgressFill.style.width = percent + "%";
+    }
+
+    btnPrev.addEventListener("click", function() {
+      if (autoAdvanceTimeout) clearTimeout(autoAdvanceTimeout);
+      if (currentIndex > 0) {
+        currentIndex--;
+        renderQuestion();
+        updateProgressUI();
+      }
+    });
+
+    function computeTotals() {
+      var totals = { A: 0, B: 0, C: 0, General: 0 };
+      for (var i = 1; i <= 18; i++) {
+        var value = Number(answers[i - 1]);
+        if (circumstance.includes(i)) totals.A += value;
+        else if (importance.includes(i)) totals.B += value;
+        else if (urgency.includes(i)) totals.C += value;
+      }
+      totals.General = totals.A + totals.B + totals.C;
+      return totals;
+    }
+
+    function computePercentages(totals) {
+      var A = totals.General ? ((totals.A / totals.General) * 100) : 0;
+      var B = totals.General ? ((totals.B / totals.General) * 100) : 0;
+      var C = totals.General ? ((totals.C / totals.General) * 100) : 0;
+      return {
+        A: Number(A.toFixed(1)),
+        B: Number(B.toFixed(1)),
+        C: Number(C.toFixed(1))
+      };
+    }
+
+    function renderCharts(percentages) {
+      if (!window.Chart) return;
+
+      if (window.ChartDataLabels && !window.ChartDataLabels_registered) {
+        Chart.register(window.ChartDataLabels);
+        window.ChartDataLabels_registered = true;
+      }
+
+      if (charts.user) { charts.user.destroy(); charts.user = null; }
+      if (charts.ideal) { charts.ideal.destroy(); charts.ideal = null; }
+
+      var commonOptions = function(titleText) {
+        return {
+          devicePixelRatio: 4,
+          responsive: true,
+          maintainAspectRatio: true,
+          aspectRatio: 1,
+          animation: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: { enabled: true },
+            datalabels: {
+              formatter: function(value) { return Number(value).toFixed(1) + "%"; },
+              color: function(ctx) {
+                return ctx.dataset.backgroundColor[ctx.dataIndex] === "#FFD700" ? "#000000" : "#FFFFFF";
+              },
+              font: { size: 11, weight: "bold", family: "Arial, sans-serif" },
+              anchor: "center",
+              align: "center"
+            },
+            title: {
+              display: true,
+              text: titleText,
+              font: { size: 16, weight: "bold", family: "Arial, sans-serif" },
+              color: "#0b2a52",
+              padding: { top: 10, bottom: 10 }
+            }
+          }
+        };
+      };
+
+      var userCtx = document.getElementById("triadChart").getContext("2d");
+      charts.user = new Chart(userCtx, {
+        type: "pie",
+        data: {
+          labels: ["Circunstância", "Importância", "Urgência"],
+          datasets: [{
+            data: [percentages.A, percentages.B, percentages.C],
+            backgroundColor: ["#FFD700", "#0b63ce", "#dc2626"],
+            borderColor: "#ffffff",
+            borderWidth: 3
+          }]
+        },
+        options: commonOptions("Sua Gestão Atual")
+      });
+
+      var idealCtx = document.getElementById("idealTriadChart").getContext("2d");
+      charts.ideal = new Chart(idealCtx, {
+        type: "pie",
+        data: {
+          labels: ["Circunstância", "Importância", "Urgência"],
+          datasets: [{
+            data: [10, 70, 20],
+            backgroundColor: ["#FFD700", "#0b63ce", "#dc2626"],
+            borderColor: "#ffffff",
+            borderWidth: 3
+          }]
+        },
+        options: commonOptions("Gestão Ideal")
+      });
+    }
+
+    function showResults() {
+      var answered = answers.filter(function(v) { return v !== null; }).length;
+      if (answered !== 18) {
+        alert("Finalize todas as respostas.");
+        return null;
+      }
+      if (!validateIntro()) return null;
+
+      var totals = computeTotals();
+      var percentages = computePercentages(totals);
+      var energyLeak = Math.max(0, Math.round((totals.A + totals.C - totals.B) / 2));
+
+      var prof = triadPickProfile(percentages.A, percentages.B, percentages.C);
+
+      // Atualiza barras de progresso
+      document.getElementById("percentA").textContent = percentages.A.toFixed(1) + "%";
+      document.getElementById("percentB").textContent = percentages.B.toFixed(1) + "%";
+      document.getElementById("percentC").textContent = percentages.C.toFixed(1) + "%";
+      document.getElementById("barA").style.width = percentages.A + "%";
+      document.getElementById("barB").style.width = percentages.B + "%";
+      document.getElementById("barC").style.width = percentages.C + "%";
+
+      // Atualiza totais
+      document.getElementById("totalA").textContent = totals.A;
+      document.getElementById("totalB").textContent = totals.B;
+      document.getElementById("totalC").textContent = totals.C;
+      document.getElementById("energyLeak").textContent = energyLeak;
+
+      // Atualiza perfil
+      document.getElementById("profile-name").textContent = "Perfil Identificado: " + prof.nome;
+      document.getElementById("profile-subtitle").textContent = prof.subtitle;
+      document.getElementById("profile-desc").textContent = (prof.desc ? prof.desc + "\n\n" : "") + prof.texto;
+
+      showStep(stepResults);
+      renderCharts(percentages);
+
+      var prettyData = {
+        nome: elName.value.trim(),
+        whatsapp: elWhatsapp.value.trim(),
+        email: elEmail.value.trim(),
+        profissao: elProfession.value.trim(),
+        idade: elAge.value.trim(),
+        escolaridade: elEscolaridade.value
+      };
+
+      return { prettyData: prettyData, totals: totals, percentages: percentages, energyLeak: energyLeak };
+    }
+
+    btnNext.addEventListener("click", async function() {
+      if (answers[currentIndex] === null) {
+        alert("Selecione uma opção para continuar.");
+        return;
+      }
+      if (currentIndex === 17) {
+        var payload = showResults();
+        if (!payload) return;
+        window._triadeData = payload;
+        setTimeout(function() {
+          autoSendWithPdf();
+        }, 800);
+      }
+    });
+
+    // Reiniciar teste
+    function restartTest() {
+      document.getElementById("name").value = "";
+      document.getElementById("whatsapp").value = "";
+      document.getElementById("email").value = "";
+      document.getElementById("profession").value = "";
+      document.getElementById("age").value = "";
+      document.getElementById("escolaridade").value = "";
+
+      answers.fill(null);
+      currentIndex = 0;
+      autoSendDone = false;
+      autoSendInProgress = false;
+      emailSendAttempts = 0;
+      window._triadeData = null;
+
+      document.getElementById("final-success-message").style.display = "none";
+      document.getElementById("auto-send-status").textContent = "";
+
+      showStep(stepIntro);
+      document.getElementById("btn-next").style.display = "none";
+    }
+
+    var btnRestart = document.getElementById("btn-back-quiz");
+    if (btnRestart) {
+      var newBtn = btnRestart.cloneNode(true);
+      btnRestart.parentNode.replaceChild(newBtn, btnRestart);
+      newBtn.addEventListener("click", restartTest);
+    }
+
+    renderQuestion();
+    updateProgressUI();
+  </script>
+</body>
+</html>
