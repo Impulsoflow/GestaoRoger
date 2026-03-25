@@ -1069,17 +1069,22 @@
     // CABEÇALHO INTERNO — azul escuro da capa
     // ════════════════════════════════════════════════════════
     function drawPageHeader() {
-      doc.setFillColor(34, 84, 138);
-      doc.rect(0, 0, pageW, 12, "F");
-      doc.setTextColor(255, 255, 255);
-      doc.setFont("helvetica", "bold");
-      doc.setFontSize(10);
-      doc.text("Instituto Impulso Coaching de Liderança", margin, 8);
-      doc.setFontSize(8);
-      doc.text(formattedName.substring(0, 30), pageW - margin, 8, { align: "right" });
-      y = margin + 10;
-    }
+  doc.setFillColor(34, 84, 138);
+  doc.rect(0, 0, pageW, 12, "F");
+  doc.setTextColor(255, 255, 255);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(10);
+  doc.text("Instituto Impulso Coaching de Liderança", margin, 8);
+  doc.setFontSize(8);
+  doc.text(formattedName.substring(0, 30), pageW - margin, 8, { align: "right" });
 
+  // ✅ RESET: volta cor padrão para o conteúdo da página
+  doc.setTextColor(51, 51, 51);
+  doc.setFont("helvetica", "normal");
+  doc.setFontSize(10);
+
+  y = margin + 10;
+}
     function newPageIfNeeded(extraH) {
       if (y + extraH > pageH - 25) { doc.addPage(); drawPageHeader(); }
     }
