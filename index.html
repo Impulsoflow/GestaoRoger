@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Mapeamento Gestão No Tempo - Instituto Impulso Coaching de Liderança</title>
+  <link rel="icon" type="image/png" href="impulso-logo.png" />
+  <link rel="apple-touch-icon" href="impulso-logo.png" />
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
@@ -49,6 +51,15 @@
       padding: 10px 0 20px;
       margin-bottom: 14px;
       border-bottom: 1px solid rgba(11,99,206,.08);
+    }
+    .impulso-logo {
+      display: block;
+      width: 92px;
+      height: 92px;
+      object-fit: contain;
+      margin: 0 auto 12px;
+      border-radius: 50%;
+      filter: drop-shadow(0 7px 12px rgba(2,32,71,.14));
     }
     .main-title {
       margin: 0;
@@ -473,6 +484,7 @@
   <div class="wrap">
 
     <div class="header">
+      <img class="impulso-logo" src="impulso-logo.png" alt="Logo Impulso Coaching" />
       <p class="main-title">Instituto Impulso Coaching de Liderança</p>
       <p class="tagline">A mudança pode acontecer em um instante</p>
       <h1 class="sub-title">Mapeamento da Gestão No Tempo</h1>
