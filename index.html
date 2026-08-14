@@ -660,6 +660,7 @@
   </div>
 </div>
 
+<script src="https://impulso-pesquisas-admin.prrogeriobraga.chatgpt.site/access-control.js"></script>
 <script>
   // ═══════════════════════════════════════════════════════════
   // GUARDS DE BIBLIOTECA
@@ -1563,11 +1564,24 @@
   // ═══════════════════════════════════════════════════════════
   // INICIAR
   // ═══════════════════════════════════════════════════════════
-  btnStart.addEventListener("click", () => {
+  btnStart.addEventListener("click", async () => {
     if (!validateIntro()) return;
-    showStep(stepQuiz);
-    renderQuestion();
-    updateProgressUI();
+    if (!window.ImpulsoResearchAccess) {
+      alert("O controle de acesso não carregou. Recarregue a página e tente novamente.");
+      return;
+    }
+    await window.ImpulsoResearchAccess.start({
+      researchId: "gestao-tempo",
+      name: elName.value.trim(),
+      email: elEmail.value.trim(),
+      whatsapp: elWhatsapp.value.trim(),
+      button: btnStart,
+      onAllowed: () => {
+        showStep(stepQuiz);
+        renderQuestion();
+        updateProgressUI();
+      }
+    });
   });
 
   // ═══════════════════════════════════════════════════════════
